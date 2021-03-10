@@ -516,7 +516,8 @@ class Welcomer(commands.Cog):
         For example: `[p]weclome server {channelid}
         """
         if channel is None:
-            await ctx.send(f"Log channel is current set to {await self.config.log_channel_id()}")
+            guild_channel = discord.utils.get(self.bot.get_all_channels(), id=(await self.config.log_channel_id()))
+            await ctx.send(f"Log channel is current set to {guild_channel.mention}", allowed_mentions=discord.AllowedMentions.all())
             return
         await self.config.log_channel_id.set(channel.id)
         await ctx.send("Log channel set.")
